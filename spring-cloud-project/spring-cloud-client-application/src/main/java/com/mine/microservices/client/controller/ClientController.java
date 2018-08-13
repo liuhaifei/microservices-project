@@ -6,6 +6,9 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -62,7 +65,11 @@ public class ClientController {
         this.targetUrlCaches=newTargetUrlCaches;
 
     }
-
+    @GetMapping("/invoke/{serviceName}/say")
+    public String invokeSay(@PathVariable String serviceName,
+                            @RequestParam String message){
+        return restTemplate.getForObject("/"+serviceName+"/say?message="+message,String.class);
+    }
     @Bean
     private RestTemplate restTemplate(){
         return new RestTemplate();
