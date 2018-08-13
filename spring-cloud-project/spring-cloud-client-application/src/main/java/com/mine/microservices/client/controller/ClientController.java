@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  * @Date 2018/8/13 16:06
  * @Version 1.0
  **/
+@RestController
 public class ClientController {
     @Autowired
     private DiscoveryClient discoveryClient;
