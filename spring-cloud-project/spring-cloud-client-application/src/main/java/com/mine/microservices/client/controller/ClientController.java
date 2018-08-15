@@ -1,10 +1,12 @@
 package com.mine.microservices.client.controller;
 
+import com.mine.microservices.client.loadbalance.LoadBanlancedRequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,56 +26,43 @@ import java.util.stream.Collectors;
  **/
 @RestController
 public class ClientController {
-    @Autowired
-    private DiscoveryClient discoveryClient;
+
     //自定义restTemplate
     @Autowired
     private RestTemplate restTemplate;
-
-    private volatile Set<String> targetUrls=new HashSet<>();
-    private volatile Map<String,Set<String>> targetUrlCaches=new HashMap<>();
-
+    @Autowired
+    private ClientHttpRequestInterceptor clientHttpRequestInterceptor;
     @Value("${spring.application.name}")
     private String currentServiceName;
 
-    @Scheduled(fixedRate=10*1000) //每10秒更新一次
-    public void updateTargetUrlsCache(){
-        //获取当前应用的机器列表
-        Set<String> oldTargetUrls=this.targetUrls;
-        List<ServiceInstance> serviceInstances= discoveryClient.getInstances(currentServiceName);
-        Set<String> newTargetUrls=serviceInstances.stream()
-                                    .map(s -> s.isSecure()?
-                                        "https://"+s.getHost()+":"+s.getPort():
-                                        "http://"+s.getHost()+":"+s.getPort())
-                                    .collect(Collectors.toSet());
-        this.targetUrls=newTargetUrls;
-        oldTargetUrls.clear();
-
-    }
-
-    @Scheduled(fixedRate=10*1000) //每10秒更新一次
-    public void updateTargetUrlsCache1(){
-        //获取当前应用的机器列表
-        Map<String,Set<String>> newTargetUrlCaches=new HashMap<>();
-        discoveryClient.getServices().forEach(serviceName->{
-            List<ServiceInstance> serviceInstances=discoveryClient.getInstances(serviceName);
-            Set<String> newTargetUrls=serviceInstances.stream()
-                    .map(s -> s.isSecure()?
-                            "https://"+s.getHost()+":"+s.getPort():
-                            "http://"+s.getHost()+":"+s.getPort())
-                    .collect(Collectors.toSet());
-            newTargetUrlCaches.put(serviceName,newTargetUrls);
-        });
-        this.targetUrlCaches=newTargetUrlCaches;
-
-    }
+//    @Scheduled(fixedRate=10*1000) //每10秒更新一次
+//    public void updateTargetUrlsCache(){
+//        //获取当前应用的机器列表
+//        Set<String> oldTargetUrls=this.targetUrls;
+//        List<ServiceInstance> serviceInstances= discoveryClient.getInstances(currentServiceName);
+//        Set<String> newTargetUrls=serviceInstances.stream()
+//                                    .map(s -> s.isSecure()?
+//                                        "https://"+s.getHost()+":"+s.getPort():
+//                                        "http://"+s.getHost()+":"+s.getPort())
+//                                    .collect(Collectors.toSet());
+//        this.targetUrls=newTargetUrls;
+//        oldTargetUrls.clear();
+//
+//    }
     @GetMapping("/invoke/{serviceName}/say")
     public String invokeSay(@PathVariable String serviceName,
                             @RequestParam String message){
+        restTemplate.setInterceptors(Arrays.asList(clientHttpRequestInterceptor));
+
         return restTemplate.getForObject("/"+serviceName+"/say?message="+message,String.class);
     }
     @Bean
-    private RestTemplate restTemplate(){
+    public RestTemplate restTemplate(){
         return new RestTemplate();
+    }
+
+    @Bean
+    public ClientHttpRequestInterceptor interceptor(){
+        return new LoadBanlancedRequestInterceptor();
     }
 }
