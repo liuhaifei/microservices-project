@@ -2,6 +2,7 @@ package com.mine.microservices.server.stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.SubscribableChannel;
@@ -22,6 +23,10 @@ public class MessageConsumerController {
     @Autowired
     private Sink sink;
 
+    //自定义渠道
+    @Autowired
+    private SimpleMessageConsumer simpleMessageConsumer;
+
     @Autowired
     @Qualifier(Sink.INPUT) // Bean 名称
     private SubscribableChannel subscribableChannel;
@@ -33,5 +38,10 @@ public class MessageConsumerController {
             String string=(String) message.getPayload();
             System.out.println("接收到消息："+string);
         });
+    }
+
+    @StreamListener("myChannel")  // Spring Cloud Stream 注解驱动
+    public void onMessage(String message) {
+        System.out.println("onMessage(String): " + message);
     }
 }

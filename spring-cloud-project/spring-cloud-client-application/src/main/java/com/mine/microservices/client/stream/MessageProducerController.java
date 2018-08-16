@@ -24,6 +24,10 @@ public class MessageProducerController {
     @Autowired
     private Source source;
 
+    //自定义渠道
+    @Autowired
+    private SimpleMessageProducer simpleMessageProducer;
+
 //    @Autowired
 //    @Qualifier(Source.OUTPUT) // Bean 名称
 //    private MessageChannel messageChannel;
@@ -31,8 +35,15 @@ public class MessageProducerController {
 
     @GetMapping("/send")
     public boolean send(@RequestParam String message){
-       MessageChannel messageChannel= source.output();
-//        return messageChannel.send(new GenericMessage("hello"));
-        return messageChannel.send(MessageBuilder.withPayload(message).build());
+       MessageChannel messageChannel= simpleMessageProducer.output();
+        return messageChannel.send(new GenericMessage("hello"));
+//        return messageChannel.send(MessageBuilder.withPayload(message).build());
+    }
+
+    @GetMapping("/send1")
+    public boolean send1(@RequestParam String message){
+        MessageChannel messageChannel= source.output();
+        return messageChannel.send(new GenericMessage("hello"));
+//        return messageChannel.send(MessageBuilder.withPayload(message).build());
     }
 }
