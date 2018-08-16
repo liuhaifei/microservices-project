@@ -1,6 +1,7 @@
 package com.mine.microservices.server;
 
 import com.mine.microservices.server.stream.SimpleMessageConsumer;
+import com.mine.microservices.server.stream.SimpleMessageTestConsumer;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -22,7 +23,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableDiscoveryClient //激活服务发现客户端
 @EnableHystrix //激活 Hystrix
 @EnableAspectJAutoProxy(proxyTargetClass = true) //激活AOP
-@EnableBinding({Sink.class, SimpleMessageConsumer.class})
+@EnableBinding({Sink.class, SimpleMessageConsumer.class, SimpleMessageTestConsumer.class})
 public class SpringCloudServerApplication {
 
     public static void main(String[] args) {

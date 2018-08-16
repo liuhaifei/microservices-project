@@ -44,4 +44,9 @@ public class MessageConsumerController {
     public void onMessage(String message) {
         System.out.println("onMessage(String): " + message);
     }
+
+    @StreamListener("01test")  // Spring Cloud Stream 注解驱动
+    public void test(String message) {
+        System.out.println("01test(String): " + message);
+    }
 }
