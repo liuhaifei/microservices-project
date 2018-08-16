@@ -12,6 +12,6 @@ import org.springframework.messaging.SubscribableChannel;
  **/
 public interface SimpleMessageConsumer {
 
-    @Input("myChannel")
+    @Input("myChannel1")
     SubscribableChannel input();
 }

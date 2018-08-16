@@ -24,8 +24,8 @@ public class MessageConsumerController {
     private Sink sink;
 
     //自定义渠道
-    @Autowired
-    private SimpleMessageConsumer simpleMessageConsumer;
+//    @Autowired
+//    private SimpleMessageConsumer simpleMessageConsumer;
 
     @Autowired
     @Qualifier(Sink.INPUT) // Bean 名称
@@ -40,7 +40,7 @@ public class MessageConsumerController {
         });
     }
 
-    @StreamListener("myChannel")  // Spring Cloud Stream 注解驱动
+    @StreamListener("myChannel1")  // Spring Cloud Stream 注解驱动
     public void onMessage(String message) {
         System.out.println("onMessage(String): " + message);
     }
