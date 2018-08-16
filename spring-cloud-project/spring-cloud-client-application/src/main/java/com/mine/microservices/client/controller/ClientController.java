@@ -1,5 +1,6 @@
 package com.mine.microservices.client.controller;
 
+import com.mine.microservices.client.annotation.CustomizedLoadBalanced;
 import com.mine.microservices.client.loadbalance.LoadBanlancedRequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,8 +31,12 @@ public class ClientController {
 
     //自定义restTemplate
     @Autowired
-    @LoadBalanced
+    @CustomizedLoadBalanced
     private RestTemplate restTemplate;
+
+    @Autowired
+    @LoadBalanced
+    private RestTemplate lbRestTempleate;
 
     private String currentServiceName;
 
@@ -55,10 +60,23 @@ public class ClientController {
 
         return restTemplate.getForObject("/"+serviceName+"/say?message="+message,String.class);
     }
+    @GetMapping("/lb/invoke/{serviceName}/say")
+    public String lbInvokeSay(@PathVariable String serviceName,
+                            @RequestParam String message){
+
+        return lbRestTempleate.getForObject("http://"+serviceName+"/say?message="+message,String.class);
+    }
+
     @Bean
     @Autowired
-    @LoadBalanced
+    @CustomizedLoadBalanced
     public RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
+
+    @Bean
+    @LoadBalanced
+    public RestTemplate lbRestTemplate(){
         return new RestTemplate();
     }
 
@@ -69,7 +87,7 @@ public class ClientController {
 
     @Bean
     @Autowired
-    public Object customizer(@LoadBalanced Collection<RestTemplate> restTemplates,
+    public Object customizer(@CustomizedLoadBalanced Collection<RestTemplate> restTemplates,
                              ClientHttpRequestInterceptor interceptor) {
         restTemplates.forEach(r -> {
             r.setInterceptors(Arrays.asList(interceptor));
