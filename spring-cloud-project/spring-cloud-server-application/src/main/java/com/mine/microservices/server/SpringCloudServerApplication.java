@@ -6,6 +6,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
@@ -17,8 +19,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  **/
 @SpringBootApplication //spring boot 应用
 @EnableDiscoveryClient //激活服务发现客户端
-//@EnableHystrix //激活 Hystrix
-//@EnableAspectJAutoProxy(proxyTargetClass = true) //激活AOP
+@EnableHystrix //激活 Hystrix
+@EnableAspectJAutoProxy(proxyTargetClass = true) //激活AOP
+@EnableBinding(Sink.class)
 public class SpringCloudServerApplication {
 
     public static void main(String[] args) {
