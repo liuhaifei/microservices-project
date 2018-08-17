@@ -2,6 +2,7 @@ package com.mine.microservices.client.controller;
 
 import com.mine.microservices.client.annotation.CustomizedLoadBalanced;
 import com.mine.microservices.client.loadbalance.LoadBanlancedRequestInterceptor;
+import com.mine.microservices.client.service.feign.clients.SayingServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -38,6 +39,10 @@ public class ClientController {
     @LoadBalanced
     private RestTemplate lbRestTempleate;
 
+
+    @Autowired
+    private SayingServices sayingServices;
+
     private String currentServiceName;
 
 //    @Scheduled(fixedRate=10*1000) //每10秒更新一次
@@ -65,6 +70,11 @@ public class ClientController {
                             @RequestParam String message){
 
         return lbRestTempleate.getForObject("http://"+serviceName+"/say?message="+message,String.class);
+    }
+
+    @GetMapping("/feign/say")
+    public String feignSay(@RequestParam String message){
+        return sayingServices.say(message);
     }
 
     @Bean
