@@ -1,5 +1,8 @@
 package com.mine.microservices.client;
 
+import com.mine.microservices.client.annotation.EnableRestClient;
+import com.mine.microservices.client.service.feign.clients.SayingServices;
+import com.mine.microservices.client.service.rest.clients.SayingRestServices;
 import com.mine.microservices.client.stream.MessageProducerController;
 import com.mine.microservices.client.stream.SimpleMessageProducer;
 import com.mine.microservices.client.stream.SimpleMessageTestProducer;
@@ -19,7 +22,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication //spring boot 应用
 @EnableDiscoveryClient //激活服务发现客户端
 @EnableScheduling      //激活定时
-@EnableFeignClients     //激活Feign
+@EnableFeignClients(clients = SayingServices.class)     //激活Feign
+@EnableRestClient(clients= SayingRestServices.class)       //激活自定义Feign
 @EnableBinding({Source.class, SimpleMessageProducer.class, SimpleMessageTestProducer.class}) //激活Binding
 public class SpringCloudClientApplication
 {

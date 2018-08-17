@@ -3,13 +3,16 @@ package com.mine.microservices.client.annotation;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.SingletonBeanRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.lang.Nullable;
 
 import java.lang.reflect.Proxy;
 import java.util.Map;
@@ -61,8 +64,15 @@ public class RestClientsRegistrar implements ImportBeanDefinitionRegistrar
                   //将 @RestClient 接口代理实现注册为Bean(@Autowired)
 
                   String beanName="RestClient."+serviceName;
-
+                  //注册方法一
                   registerBeanByFactoryBean(serviceName,beanName,proxy,restClientClass,registry);
+
+                  //注册方法二
+//                  if(registry instanceof SingletonBeanRegistry){
+//                      SingletonBeanRegistry singletonBeanRegistry=(SingletonBeanRegistry)registry;
+//                      singletonBeanRegistry.registerSingleton(beanName,proxy);
+//                  }
+
               });
         ;
     }
@@ -72,7 +82,7 @@ public class RestClientsRegistrar implements ImportBeanDefinitionRegistrar
                                                   Class<?> restClintClass,
                                                   BeanDefinitionRegistry registry){
         BeanDefinitionBuilder beanDefinitionBuilder=
-                        BeanDefinitionBuilder.genericBeanDefinition(RestClientsRegistrar.class);
+                        BeanDefinitionBuilder.genericBeanDefinition(RestClientClassFactoryBean.class);
         //增加第一个构造器参数引用:proxy
         beanDefinitionBuilder.addConstructorArgValue(proxy);
         //增加第二个构造器参数：restClientClass
@@ -90,5 +100,29 @@ public class RestClientsRegistrar implements ImportBeanDefinitionRegistrar
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
         this.beanFactory=beanFactory;
+    }
+
+    private static class RestClientClassFactoryBean implements FactoryBean {
+
+        private final Object proxy;
+
+        private final Class<?> restClientClass;
+
+        private RestClientClassFactoryBean(Object proxy, Class<?> restClientClass) {
+            this.proxy = proxy;
+            this.restClientClass = restClientClass;
+        }
+
+        @Nullable
+        @Override
+        public Object getObject() throws Exception {
+            return proxy;
+        }
+
+        @Nullable
+        @Override
+        public Class<?> getObjectType() {
+            return restClientClass;
+        }
     }
 }
