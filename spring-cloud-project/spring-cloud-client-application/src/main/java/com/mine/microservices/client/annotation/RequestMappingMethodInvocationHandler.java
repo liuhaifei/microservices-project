@@ -57,7 +57,9 @@ public class RequestMappingMethodInvocationHandler implements InvocationHandler 
                 Class<?> paramType=paramTypes[i];
                 RequestParam requestParam=(RequestParam)paramAnnotation[0];
                 if(requestParam!=null){
-                    String paramName=paramNames[i];
+                    //取不到
+//                    String paramName=paramNames[i];
+                    String paramName="";
                     String requestParamName= StringUtils.hasText(requestParam.value())?
                                                 requestParam.value():paramName;
                     String requestParamValue=String.class.equals(paramType)
@@ -75,7 +77,7 @@ public class RequestMappingMethodInvocationHandler implements InvocationHandler 
             String url=urlBuilder.toString();
 
             //获取RestTemplate Bean名称为"lbRestTempleate"
-            RestTemplate restTemplate=beanFactory.getBean("lbRestTempleate",RestTemplate.class);
+            RestTemplate restTemplate=beanFactory.getBean("lbRestTemplate",RestTemplate.class);
 
             return restTemplate.getForObject(url,method.getReturnType());
         }
