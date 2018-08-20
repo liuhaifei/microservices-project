@@ -45,7 +45,7 @@ public class RequestMappingMethodInvocationHandler implements InvocationHandler 
                                             .append(uri[0]);
             //获取方法参数数量
             int count=method.getParameterCount();
-            //方法参数是有序 FIXME
+            //方法参数是有序 FIXME JVM虚拟机方法签名不包含参数名称
             String[] paramNames=parameterNameDiscoverer.getParameterNames(method);
             //方法参数类型集合
             Class<?>[] paramTypes=method.getParameterTypes();
