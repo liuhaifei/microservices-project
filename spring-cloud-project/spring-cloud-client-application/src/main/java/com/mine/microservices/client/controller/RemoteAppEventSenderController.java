@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date 2018/8/20 14:57
  * @Version 1.0
  **/
+@RestController
 public class RemoteAppEventSenderController implements ApplicationEventPublisherAware {
 
     private ApplicationEventPublisher publisher;

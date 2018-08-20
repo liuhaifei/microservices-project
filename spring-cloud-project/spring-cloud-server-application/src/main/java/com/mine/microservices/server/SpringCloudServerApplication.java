@@ -1,5 +1,6 @@
 package com.mine.microservices.server;
 
+import com.mine.microservices.server.bus.listener.HttpRemoteAppReceiverListener;
 import com.mine.microservices.server.stream.SimpleMessageConsumer;
 import com.mine.microservices.server.stream.SimpleMessageTestConsumer;
 import org.springframework.boot.WebApplicationType;
@@ -29,6 +30,7 @@ public class SpringCloudServerApplication {
     public static void main(String[] args) {
         new SpringApplicationBuilder(SpringCloudServerApplication.class)
                     .web(WebApplicationType.SERVLET)
+                    .listeners(new HttpRemoteAppReceiverListener())
                     .run(args);
 
     }

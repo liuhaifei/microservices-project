@@ -18,6 +18,7 @@ import java.util.Map;
  * @Date 2018/8/20 14:57
  * @Version 1.0
  **/
+@RestController
 public class RemoteAppEventReceiverController implements ApplicationEventPublisherAware {
 
     private Logger logger= LoggerFactory.getLogger(RemoteAppEventReceiverController.class);

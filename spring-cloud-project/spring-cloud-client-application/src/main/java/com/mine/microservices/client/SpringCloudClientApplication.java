@@ -1,6 +1,7 @@
 package com.mine.microservices.client;
 
 import com.mine.microservices.client.annotation.EnableRestClient;
+import com.mine.microservices.client.bus.listener.HttpRemoteAppEventListener;
 import com.mine.microservices.client.service.feign.clients.SayingServices;
 import com.mine.microservices.client.service.rest.clients.SayingRestServices;
 import com.mine.microservices.client.stream.MessageProducerController;
@@ -32,6 +33,7 @@ public class SpringCloudClientApplication
 
         new SpringApplicationBuilder(SpringCloudClientApplication.class)
                 .web(WebApplicationType.SERVLET)
+                .listeners(new HttpRemoteAppEventListener())
                 .run(args);
     }
 }
