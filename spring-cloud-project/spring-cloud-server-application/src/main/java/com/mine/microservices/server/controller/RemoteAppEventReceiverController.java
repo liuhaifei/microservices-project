@@ -30,7 +30,7 @@ public class RemoteAppEventReceiverController implements ApplicationEventPublish
         //事件发送者
         String sender=(String) data.get("sender");
         //事件的数据内容
-        String value=(String) data.get("value");
+        Object value=data.get("value");
         //事件类型
         String type=(String) data.get("type");
 

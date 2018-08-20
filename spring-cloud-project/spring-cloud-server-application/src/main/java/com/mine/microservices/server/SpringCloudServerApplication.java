@@ -12,6 +12,7 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @ClassName SpringCloudServerApplication
@@ -25,12 +26,12 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableHystrix //激活 Hystrix
 @EnableAspectJAutoProxy(proxyTargetClass = true) //激活AOP
 @EnableBinding({Sink.class, SimpleMessageConsumer.class, SimpleMessageTestConsumer.class})
+@EnableAsync
 public class SpringCloudServerApplication {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(SpringCloudServerApplication.class)
                     .web(WebApplicationType.SERVLET)
-                    .listeners(new HttpRemoteAppReceiverListener())
                     .run(args);
 
     }

@@ -3,6 +3,7 @@ package com.mine.microservices.client.controller;
 import com.mine.microservices.client.bus.event.RemoteAppEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,6 +24,7 @@ public class RemoteAppEventSenderController implements ApplicationEventPublisher
         return "Sent";
     }
     @PostMapping("/send/remote/event/{appName}")
+    @Async
     public String sendAppCluster(@PathVariable String appName, @RequestBody Object data){
         RemoteAppEvent remoteAppEvent=new RemoteAppEvent(data,appName,true);
         publisher.publishEvent(remoteAppEvent);

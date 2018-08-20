@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.SmartApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import java.util.Map;
  * @Date 2018/8/20 14:05
  * @Version 1.0
  **/
+
 public class HttpRemoteAppEventListener implements SmartApplicationListener{
 
     private RestTemplate restTemplate=new RestTemplate();

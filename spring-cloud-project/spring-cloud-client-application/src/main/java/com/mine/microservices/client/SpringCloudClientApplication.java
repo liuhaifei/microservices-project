@@ -14,6 +14,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -26,6 +27,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableFeignClients(clients = SayingServices.class)     //激活Feign
 @EnableRestClient(clients= SayingRestServices.class)       //激活自定义Feign
 @EnableBinding({Source.class, SimpleMessageProducer.class, SimpleMessageTestProducer.class}) //激活Binding
+@EnableAsync
 public class SpringCloudClientApplication
 {
     public static void main( String[] args )
