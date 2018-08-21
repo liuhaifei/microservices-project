@@ -14,4 +14,7 @@ public interface SimpleMessageConsumer {
 
     @Input("myChannel1")
     SubscribableChannel input();
+
+    @Input("testrocket")
+    SubscribableChannel testrocket();
 }

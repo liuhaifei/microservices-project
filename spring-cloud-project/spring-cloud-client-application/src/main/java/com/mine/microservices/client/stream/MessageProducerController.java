@@ -55,4 +55,10 @@ public class MessageProducerController {
         return messageChannel.send(new GenericMessage("send2:"+message));
 //        return messageChannel.send(MessageBuilder.withPayload(message).build());
     }
+    @GetMapping("/send/testrocket")
+    public boolean testrocket(@RequestParam String message){
+        MessageChannel messageChannel= simpleMessageProducer.testrocket();
+        return messageChannel.send(new GenericMessage("testrocket:"+message));
+    }
+
 }

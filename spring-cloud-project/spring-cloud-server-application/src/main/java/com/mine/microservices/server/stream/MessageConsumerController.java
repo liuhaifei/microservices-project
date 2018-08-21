@@ -49,4 +49,11 @@ public class MessageConsumerController {
     public void test(String message) {
         System.out.println("01test(String): " + message);
     }
+
+
+    @StreamListener("testrocket")  // Spring Cloud Stream 注解驱动
+    public void testrocket(String message)
+    {
+        System.out.println("testrocket(String): " + message);
+    }
 }
