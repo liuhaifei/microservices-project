@@ -1,0 +1,2 @@
+rocketmq=\
+com.mine.microservices.spring.cloud.binder.rocketmq.RocketMQMessageChannelBinderConfiguration

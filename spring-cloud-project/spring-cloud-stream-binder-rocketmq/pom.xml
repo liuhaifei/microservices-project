@@ -9,13 +9,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring-cloud-stream-binder-rocketmq</artifactId>
-    <name>spring-cloud-stream-binder-rocketmq</name>
 
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>4.3.0</version>
         </dependency>
 
     </dependencies>
