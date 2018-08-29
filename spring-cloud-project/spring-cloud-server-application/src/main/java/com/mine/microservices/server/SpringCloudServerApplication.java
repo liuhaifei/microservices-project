@@ -3,7 +3,6 @@ package com.mine.microservices.server;
 import com.mine.microservices.server.bus.listener.HttpRemoteAppReceiverListener;
 import com.mine.microservices.server.stream.SimpleMessageConsumer;
 import com.mine.microservices.server.stream.SimpleMessageTestConsumer;
-import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
@@ -13,6 +12,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @ClassName SpringCloudServerApplication
@@ -31,7 +31,7 @@ public class SpringCloudServerApplication {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(SpringCloudServerApplication.class)
-                    .web(WebApplicationType.SERVLET)
+//                    .web(WebApplicationType.SERVLET)
                     .run(args);
 
     }
