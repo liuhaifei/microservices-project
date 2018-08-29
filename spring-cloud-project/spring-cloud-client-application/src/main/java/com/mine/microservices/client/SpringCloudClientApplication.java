@@ -16,6 +16,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 /**
  * Hello world!
@@ -38,4 +39,6 @@ public class SpringCloudClientApplication
                 .listeners(new HttpRemoteAppEventListener())
                 .run(args);
     }
+
+
 }
