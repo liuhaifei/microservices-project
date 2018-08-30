@@ -61,4 +61,10 @@ public class MessageProducerController {
         return messageChannel.send(new GenericMessage("testrocket:"+message));
     }
 
+    @GetMapping("/send/http")
+    public boolean testHttp(@RequestParam String message){
+        MessageChannel messageChannel= simpleMessageProducer.http();
+        return messageChannel.send(new GenericMessage("testrocket:"+message));
+    }
+
 }

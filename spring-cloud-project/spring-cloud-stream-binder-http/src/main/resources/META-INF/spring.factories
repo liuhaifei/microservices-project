@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.mine.microservices.spring.cloud.binder.http.HttpMessageChannelWebAutoConfiguration

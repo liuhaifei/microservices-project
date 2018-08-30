@@ -17,4 +17,7 @@ public interface SimpleMessageConsumer {
 
     @Input("testrocket")
     SubscribableChannel testrocket();
+
+    @Input("http")
+    SubscribableChannel http();
 }

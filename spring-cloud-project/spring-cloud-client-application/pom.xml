@@ -73,5 +73,11 @@
             <artifactId>spring-cloud-stream-binder-rocketmq</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!-- 自定义http binder-->
+        <dependency>
+            <artifactId>spring-cloud-stream-binder-http</artifactId>
+            <groupId>com.mine.microservices</groupId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

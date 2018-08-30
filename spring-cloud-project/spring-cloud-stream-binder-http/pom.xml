@@ -10,20 +10,31 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>spring-cloud-stream-binder-http</artifactId>
+    <groupId>com.mine.microservices</groupId>
+    <version>0.0.1-SNAPSHOT</version>
 
     <name>spring-cloud-stream-binder-http</name>
 
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>1.5.3.RELEASE</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>3.2.18.RELEASE</version>
+            <artifactId>spring-webmvc</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -56,4 +56,10 @@ public class MessageConsumerController {
     {
         System.out.println("testrocket(String): " + message);
     }
+
+    @StreamListener("http")  // Spring Cloud Stream 注解驱动
+    public void testHttp(String message)
+    {
+        System.out.println("testHttp(String): " + message);
+    }
 }

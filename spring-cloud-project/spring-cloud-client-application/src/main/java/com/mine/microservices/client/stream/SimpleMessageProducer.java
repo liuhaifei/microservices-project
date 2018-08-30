@@ -17,6 +17,9 @@ public interface SimpleMessageProducer {
 
     @Output("testrocket")
     MessageChannel testrocket();
+
+    @Output("http")
+    MessageChannel http();
 }
 
 
