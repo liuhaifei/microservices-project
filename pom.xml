@@ -8,6 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
 		<module>spring-cloud-project</module>
+		<module>spring-demo</module>
 	</modules>
 	<packaging>pom</packaging>
 

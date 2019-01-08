@@ -38,8 +38,6 @@ public class HttpMessageChannelBinder implements Binder<MessageChannel, Consumer
     private MessageReceiverController controller;
 
 
-    private static final String NAME_ADDRESS="localhost:9876";
-
 
     public HttpMessageChannelBinder(DiscoveryClient discoveryClient, MessageReceiverController controller) {
         this.discoveryClient = discoveryClient;
